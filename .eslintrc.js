@@ -2,7 +2,8 @@ module.exports = {
   env: {
     commonjs: true,
     es6: true,
-    node: true
+    node: true,
+    browser: true
   },
   extends: 'eslint:recommended',
   globals: {
@@ -15,7 +16,6 @@ module.exports = {
   rules: {
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
     semi: ['error', 'never']
   }
 };

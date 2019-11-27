@@ -9,6 +9,8 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "koa": "^2.11.0",
     "puppeteer": "^2.0.0"
   },
   "devDependencies": {
