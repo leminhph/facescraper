@@ -32,7 +32,6 @@ puppeteer
       const decodedUrl = decodeURIComponent(query.url)
       const metadata = await extractComments(browser, decodedUrl)
 
-      console.log(metadata.length)
       // eslint-disable-next-line require-atomic-updates
       ctx.body = {
         data: metadata
