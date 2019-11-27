@@ -6,12 +6,15 @@ const extractComments = require("./lib/puppeteer")
 
 const app = new Koa()
 
+// port will be assigned by heroku
+const port = process.env.PORT || 3000
+
 // use only 1 instance of browser
 puppeteer
   .launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--incognito"],
-    // set this to true to debug
-    headless: false
+    // set this to false to debug
+    headless: true
   })
   .then(browser => {
     app.use(cors())
@@ -29,14 +32,14 @@ puppeteer
       const decodedUrl = decodeURIComponent(query.url)
       const metadata = await extractComments(browser, decodedUrl)
 
-      ctx.body = {
+      Object.assign(ctx.body, {
         data: metadata
-      }
+      })
 
       return
     })
 
-    app.listen(3000)
+    app.listen(port)
 
     process.on("SIGTERM", async () => {
       await browser.close()
