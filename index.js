@@ -7,7 +7,7 @@ const extractComments = require("./lib/puppeteer")
 const app = new Koa()
 
 // port will be assigned by heroku
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3333
 
 // use only 1 instance of browser
 puppeteer
@@ -32,9 +32,11 @@ puppeteer
       const decodedUrl = decodeURIComponent(query.url)
       const metadata = await extractComments(browser, decodedUrl)
 
-      Object.assign(ctx.body, {
+      console.log(metadata.length)
+      // eslint-disable-next-line require-atomic-updates
+      ctx.body = {
         data: metadata
-      })
+      }
 
       return
     })
