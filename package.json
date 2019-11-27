@@ -6,7 +6,8 @@
   "repository": "git@github.com:leminhph/igotyouinmysight.git",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "@koa/cors": "^3.0.0",
