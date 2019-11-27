@@ -9,7 +9,7 @@ const app = new Koa()
 // use only 1 instance of browser
 puppeteer
   .launch({
-    args: ["--incognito"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--incognito"],
     // set this to true to debug
     headless: false
   })
