@@ -1,6 +1,7 @@
 FROM node:lts
 
 WORKDIR /app
+
 ENV NODE_ENV=production
 
 RUN apt-get update && \
