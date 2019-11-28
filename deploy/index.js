@@ -14,17 +14,17 @@ const deployment = new k8s.apps.v1.Deployment("facescraper", {
           {
             name: "facescraper",
             image: "leminhph/facescraper:latest",
-            imagePullPolicy: "always",
+            imagePullPolicy: "Always",
             ports: [
               {
                 name: "http",
-                containerPort: "3333"
+                containerPort: 3333
               }
             ],
             env: [
               {
                 name: "HEADLESS",
-                value: true
+                value: "true"
               }
             ]
           }
@@ -43,13 +43,14 @@ const service = new k8s.core.v1.Service("facescraper", {
 
 const mapping = deployment.metadata.name.apply(
   name =>
-    new k8s.apiextensions.CustomResource("facescraper-mapping", {
+    new k8s.apiextensions.CustomResource("facescraper", {
       apiVersion: "getambassador.io/v1",
       kind: "Mapping",
       spec: {
+        host: `services.k8s.cbed.io`,
         prefix: "/facescraper/",
-        host: `services.${process.env.KOPS_CLUSTER_NAME}`,
-        service: `${name}:3333`
+        service: `${name}:3333`,
+        bypass_auth: true
       }
     })
 )
