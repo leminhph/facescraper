@@ -12,6 +12,6 @@ RUN apt-get update && \
 
 COPY . /app
 
-RUN yarn install
+RUN yarn install --production
 
 CMD ["node", "index.js"]
