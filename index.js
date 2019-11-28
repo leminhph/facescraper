@@ -14,7 +14,7 @@ puppeteer
   .launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--incognito"],
     // set this to false to debug
-    headless: true
+    headless: false
   })
   .then(browser => {
     app.use(cors())
