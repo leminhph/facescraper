@@ -50,7 +50,8 @@ const mapping = service.metadata.name.apply(
         host: `services.k8s.cbed.io`,
         prefix: "/facescraper/",
         service: `${name}.default:3333`,
-        bypass_auth: true
+        bypass_auth: true,
+        timeout_ms: 60000
       }
     })
 )
