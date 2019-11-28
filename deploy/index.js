@@ -41,7 +41,7 @@ const service = new k8s.core.v1.Service("facescraper", {
   }
 })
 
-const mapping = deployment.metadata.name.apply(
+const mapping = service.metadata.name.apply(
   name =>
     new k8s.apiextensions.CustomResource("facescraper", {
       apiVersion: "getambassador.io/v1",
@@ -49,7 +49,7 @@ const mapping = deployment.metadata.name.apply(
       spec: {
         host: `services.k8s.cbed.io`,
         prefix: "/facescraper/",
-        service: `${name}:3333`,
+        service: `${name}.default:3333`,
         bypass_auth: true
       }
     })
