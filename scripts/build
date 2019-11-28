@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 docker build --tag leminhph/facescraper .
-# docker push leminhph/facescraper
+docker push leminhph/facescraper
