@@ -6,7 +6,6 @@ const extractComments = require("./lib/puppeteer")
 
 const app = new Koa()
 
-// port will be assigned by heroku
 const port = process.env.PORT || 3333
 
 // use only 1 instance of browser
