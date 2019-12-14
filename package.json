@@ -18,7 +18,7 @@
   "devDependencies": {
     "eslint": "^6.7.2",
     "nodemon": "^2.0.1",
-    "@pulumi/pulumi": "^1.6.1",
+    "@pulumi/pulumi": "^1.7.1",
     "@pulumi/kubernetes": "^1.4.0"
   },
   "prettier": {
