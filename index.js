@@ -1,12 +1,13 @@
+/* eslint-disable require-atomic-updates */
 const Koa = require("koa")
 const cors = require("@koa/cors")
 const puppeteer = require("puppeteer")
 
-const extractComments = require("./lib/puppeteer")
+const extractComments = require("./lib/extractComments")
+const getPageID = require('./lib/getPageID')
 
 const app = new Koa()
 
-// port will be assigned by heroku
 const port = process.env.PORT || 3333
 
 // use only 1 instance of browser
@@ -30,14 +31,25 @@ puppeteer
       }
 
       const decodedUrl = decodeURIComponent(query.url)
+
+      if (query.action === 'getPageID') {
+        const pageId = await getPageID(browser, decodedUrl)
+
+        ctx.body = {
+          data: {
+            id: pageId
+          }
+        }
+
+        return
+      }
+
       const metadata = await extractComments(browser, decodedUrl)
 
       // eslint-disable-next-line require-atomic-updates
       ctx.body = {
         data: metadata
       }
-
-      return
     })
 
     app.listen(port)
