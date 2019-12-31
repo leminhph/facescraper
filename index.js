@@ -1,10 +1,13 @@
 /* eslint-disable require-atomic-updates */
 const Koa = require("koa")
 const cors = require("@koa/cors")
+const bodyParser = require('koa-bodyparser')
+
 const puppeteer = require("puppeteer")
 
-const extractComments = require("./lib/extractComments")
+const getComments = require("./lib/getComments")
 const getPageID = require('./lib/getPageID')
+const getPageFans = require('./lib/getPageFans')
 
 const app = new Koa()
 
@@ -19,10 +22,12 @@ puppeteer
   })
   .then(browser => {
     app.use(cors())
+    app.use(bodyParser())
     app.use(async ctx => {
       const query = ctx.request.query
+      const requestBody = ctx.request.body
 
-      if (!query.url) {
+      if (!query.url && !query.action) {
         ctx.body = {
           data: []
         }
@@ -32,7 +37,17 @@ puppeteer
 
       const decodedUrl = decodeURIComponent(query.url)
 
-      if (query.action === 'getPageID') {
+      switch (query.action) {
+      case 'getPageFans': {
+        const pageFans = await getPageFans(browser, requestBody)
+
+        ctx.body = {
+          data: pageFans
+        }
+
+        return
+      }
+      case 'getPageID': {
         const pageId = await getPageID(browser, decodedUrl)
 
         ctx.body = {
@@ -43,12 +58,14 @@ puppeteer
 
         return
       }
+      default: {
+        const comments = await getComments(browser, decodedUrl)
+        ctx.body = {
+          data: comments
+        }
 
-      const metadata = await extractComments(browser, decodedUrl)
-
-      // eslint-disable-next-line require-atomic-updates
-      ctx.body = {
-        data: metadata
+        return
+      }
       }
     })
 
