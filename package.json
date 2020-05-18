@@ -15,7 +15,7 @@
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "node-fetch": "^2.6.0",
-    "puppeteer": "^2.0.0"
+    "puppeteer": "^3.1.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
